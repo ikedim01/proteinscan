@@ -3,7 +3,11 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"openGzipOrText": "00_utils.ipynb",
-         "iterDat": "01_readuniprot.ipynb"}
+         "iterDat": "01_readuniprot.ipynb",
+         "datEntryLnsWithCode": "01_readuniprot.ipynb",
+         "datEntryPrimaryAC": "01_readuniprot.ipynb",
+         "scanDat": "01_readuniprot.ipynb",
+         "allPrimaryACsInDat": "01_readuniprot.ipynb"}
 
 modules = ["utils.py",
            "readuniprot.py"]
