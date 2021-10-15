@@ -1,6 +1,7 @@
 {
   "proteinscan": {
     "Overview": "/",
-    "utils": "utils.html"
+    "utils": "utils.html",
+    "readuniprot": "readuniprot.html"
   }
 }

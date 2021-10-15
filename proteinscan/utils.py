@@ -4,6 +4,10 @@ __all__ = ['openGzipOrText']
 
 # Cell
 
+import gzip
+
+# Cell
+
 def openGzipOrText(fPath,encoding=None) :
     """Opens a file for reading as text, uncompressing it on read if the path ends in .gz"""
     if str(fPath).lower().endswith('.gz') :

@@ -2,9 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"openGzipOrText": "00_utils.ipynb"}
+index = {"openGzipOrText": "00_utils.ipynb",
+         "iterDat": "01_readuniprot.ipynb"}
 
-modules = ["utils.py"]
+modules = ["utils.py",
+           "readuniprot.py"]
 
 doc_url = "https://ikedim01.github.io/proteinscan/"
 

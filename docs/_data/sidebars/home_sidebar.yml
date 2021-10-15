@@ -12,6 +12,9 @@ entries:
     - output: web,pdf
       title: utils
       url: utils.html
+    - output: web,pdf
+      title: readuniprot
+      url: readuniprot.html
     output: web
     title: proteinscan
   output: web
