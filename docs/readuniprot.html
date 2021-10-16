@@ -47,7 +47,7 @@ nb_path: "01_readuniprot.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="iterDat" class="doc_header"><code>iterDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>iterDat</code>(<strong><code>datFPath</code></strong>)</p>
+<h4 id="iterDat" class="doc_header"><code>iterDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>iterDat</code>(<strong><code>datFPath</code></strong>)</p>
 </blockquote>
 <p>Iterator yielding a list of lines for each entry in the .dat file.</p>
 
@@ -72,7 +72,7 @@ nb_path: "01_readuniprot.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="datEntryLnsWithCode" class="doc_header"><code>datEntryLnsWithCode</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryLnsWithCode</code>(<strong><code>datEntry</code></strong>, <strong><code>code</code></strong>)</p>
+<h4 id="datEntryLnsWithCode" class="doc_header"><code>datEntryLnsWithCode</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryLnsWithCode</code>(<strong><code>datEntry</code></strong>, <strong><code>code</code></strong>)</p>
 </blockquote>
 <p>Returns a list of the lines in a .dat file entry with the given code.</p>
 
@@ -97,7 +97,7 @@ nb_path: "01_readuniprot.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="datEntryPrimaryAC" class="doc_header"><code>datEntryPrimaryAC</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryPrimaryAC</code>(<strong><code>datEntry</code></strong>)</p>
+<h4 id="datEntryPrimaryAC" class="doc_header"><code>datEntryPrimaryAC</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryPrimaryAC</code>(<strong><code>datEntry</code></strong>)</p>
 </blockquote>
 <p>Returns the primary accession number from a .det file entry.</p>
 
@@ -125,17 +125,17 @@ nb_path: "01_readuniprot.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">))</span>
-<span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
-        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">==</span><span class="mi">61</span>
-        <span class="ow">and</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ID   002R_IIV3               Reviewed;         458 AA.</span><span class="se">\n</span><span class="s1">&#39;</span>
-        <span class="ow">and</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;OX   NCBI_TaxID=345201;</span><span class="se">\n</span><span class="s1">&#39;</span>
-        <span class="ow">and</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;     QSIDRYFCSL DSNYNSEDED FEYDSDSEDD DSDSEDDC</span><span class="se">\n</span><span class="s1">&#39;</span>
-        <span class="ow">and</span> <span class="n">datEntryLnsWithCode</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s1">&#39;DT&#39;</span><span class="p">)</span> <span class="o">==</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">))</span>
+<span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">==</span><span class="mi">61</span>
+        <span class="ow">and</span> <span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ID   002R_IIV3               Reviewed;         458 AA.</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="ow">and</span> <span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">10</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;OX   NCBI_TaxID=345201;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="ow">and</span> <span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;     QSIDRYFCSL DSNYNSEDED FEYDSDSEDD DSDSEDDC</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="ow">and</span> <span class="n">datEntryLnsWithCode</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s1">&#39;DT&#39;</span><span class="p">)</span> <span class="o">==</span>
             <span class="p">[</span><span class="s1">&#39;16-JUN-2009, integrated into UniProtKB/Swiss-Prot.&#39;</span><span class="p">,</span>
              <span class="s1">&#39;11-JUL-2006, sequence version 1.&#39;</span><span class="p">,</span>
              <span class="s1">&#39;02-JUN-2021, entry version 28.&#39;</span><span class="p">]</span>
-        <span class="ow">and</span> <span class="n">datEntryPrimaryAC</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">==</span><span class="s1">&#39;Q197F8&#39;</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="n">datEntryPrimaryAC</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">==</span><span class="s1">&#39;Q197F8&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -156,7 +156,7 @@ nb_path: "01_readuniprot.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="scanDat" class="doc_header"><code>scanDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>scanDat</code>(<strong><code>datFPath</code></strong>, <strong><code>fn</code></strong>, <strong><code>returnFull</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="scanDat" class="doc_header"><code>scanDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>scanDat</code>(<strong><code>datFPath</code></strong>, <strong><code>fn</code></strong>, <strong><code>returnFull</code></strong>=<em><code>False</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Scan a function across each entry in a .dat file, accumulating the results.
 If the function returns None, the entry is ignored; otherwise the result
@@ -185,9 +185,84 @@ which are passed on to the function to be scanned.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="allPrimaryACsInDat" class="doc_header"><code>allPrimaryACsInDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>allPrimaryACsInDat</code>(<strong><code>datFPath</code></strong>)</p>
+<h4 id="allPrimaryACsInDat" class="doc_header"><code>allPrimaryACsInDat</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>allPrimaryACsInDat</code>(<strong><code>datFPath</code></strong>)</p>
 </blockquote>
 <p>Returns a list of all primary accession numbers in a .dat file.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryPE" class="doc_header"><code>datEntryPE</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L68" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryPE</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns the level of evidence for a protein's existence (1-5, lower is stronger).</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryName" class="doc_header"><code>datEntryName</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L73" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryName</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns a descriptive name from a .dat file entry.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntrySeq" class="doc_header"><code>datEntrySeq</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L85" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntrySeq</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns the amino acid sequence from a .dat file entry as a single string.</p>
 
 </div>
 
@@ -214,9 +289,296 @@ which are passed on to the function to be scanned.</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">allPrimaryACsInDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">)</span>
+<span class="n">pes</span> <span class="o">=</span> <span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">datEntryPE</span><span class="p">)</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">datEntryName</span><span class="p">)</span>
+<span class="n">seqs</span> <span class="o">=</span> <span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">datEntrySeq</span><span class="p">)</span>
 <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">acs</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
         <span class="ow">and</span> <span class="n">acs</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;Q6GZX4&#39;</span><span class="p">,</span> <span class="s1">&#39;Q6GZX3&#39;</span><span class="p">,</span> <span class="s1">&#39;Q197F8&#39;</span><span class="p">,</span> <span class="s1">&#39;Q197F7&#39;</span><span class="p">,</span> <span class="s1">&#39;Q6GZX2&#39;</span><span class="p">]</span>
-        <span class="ow">and</span> <span class="n">acs</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;P0C9G3&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G4&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G1&#39;</span><span class="p">,</span> <span class="s1">&#39;P18559&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G6&#39;</span><span class="p">])</span>
+        <span class="ow">and</span> <span class="n">acs</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;P0C9G3&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G4&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G1&#39;</span><span class="p">,</span> <span class="s1">&#39;P18559&#39;</span><span class="p">,</span> <span class="s1">&#39;P0C9G6&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pes</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
+        <span class="ow">and</span> <span class="n">pes</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">pes</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span><span class="o">==</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
+        <span class="ow">and</span> <span class="n">names</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;Putative transcription factor 001R&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Uncharacterized protein 002L&#39;</span><span class="p">,</span> <span class="s1">&#39;Uncharacterized protein 002R&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">names</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;Protein MGF 110-1L&#39;</span><span class="p">,</span> <span class="s1">&#39;Protein MGF 110-2L (Precursor)&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Protein MGF 110-2L (Precursor)&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">)</span><span class="o">==</span><span class="mi">185</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">==</span><span class="mi">256</span>
+        <span class="ow">and</span> <span class="n">seqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;MAFSAEDVLKEYDRRRRMEALLLSLYYPNDRKLLDYKEWSPPRVQVECPKAPVEWNNPPSEKGLIVGH&#39;</span>
+            <span class="o">+</span><span class="s1">&#39;FSGIKYKGEKAQASEVDVNKMCCWVSKFKDAMRRYQGIQTCKIPGKVLSDLDAKIKAYNLTVEGVEGFVRYSRVTK&#39;</span>
+            <span class="o">+</span><span class="s1">&#39;QHVAAFLKELRHSKQYENVNLIHYILTDKRVDIQHLEKDLVKDFKALVESAHRMRQGHMINVKYILYQLLKKHGHG&#39;</span>
+            <span class="o">+</span><span class="s1">&#39;PDGPDILTVKTGSKGVLYDDSFRKIYTDLGWKFTPL&#39;</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">==</span><span class="mi">113</span>
+        <span class="ow">and</span> <span class="n">seqs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;MGFFSYLGLVLVGLASLTSLASLANLQDFSTDNPLEEELRCWCQYVKNCRFCWACQDGFCKNKVLK&#39;</span>
+            <span class="o">+</span><span class="s1">&#39;NMPSVQEHSYPMEHCMIHRQCKYVRDGPIFQVECMMQTCDAIHLLNA&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryGOLines" class="doc_header"><code>datEntryGOLines</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L97" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryGOLines</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns the lines with GO terms from the database x-ref section of a .dat file entry.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryGOTermPresent" class="doc_header"><code>datEntryGOTermPresent</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L102" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryGOTermPresent</code>(<strong><code>datEntry</code></strong>, <strong><code>goTerm</code></strong>)</p>
+</blockquote>
+<p>Returns 'pos' or 'neg' accordingly as a .dat file entry includes the given GO term.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryIsAtpBinding" class="doc_header"><code>datEntryIsAtpBinding</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L108" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryIsAtpBinding</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns 'pos' or 'neg accordingly as a .dat file entry has the ATP binding GO term.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryIsGtpBinding" class="doc_header"><code>datEntryIsGtpBinding</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L111" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryIsGtpBinding</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns 'pos' or 'neg accordingly as a .dat file entry has the GTP binding GO term.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryIsMetalBinding" class="doc_header"><code>datEntryIsMetalBinding</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L114" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryIsMetalBinding</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns 'pos' or 'neg accordingly as a .dat file entry has the metal binding GO term.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="datEntryKWs" class="doc_header"><code>datEntryKWs</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L118" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>datEntryKWs</code>(<strong><code>datEntry</code></strong>)</p>
+</blockquote>
+<p>Returns a list of the keywords from the KW section of a .dat file entry.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">goLns</span> <span class="o">=</span> <span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">datEntryGOLines</span><span class="p">)</span>
+<span class="n">kws</span> <span class="o">=</span> <span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">datEntryKWs</span><span class="p">)</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">goLns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;GO; GO:0046782; P:regulation of viral transcription; IEA:InterPro.&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">goLns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;GO; GO:0033644; C:host cell membrane; IEA:UniProtKB-SubCell.&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;GO; GO:0016021; C:integral component of membrane; IEA:UniProtKB-KW.&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">goLns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="p">[]</span>
+        <span class="ow">and</span> <span class="n">datEntryGOTermPresent</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s1">&#39;GO:0046782&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;pos&#39;</span>
+        <span class="ow">and</span> <span class="n">datEntryGOTermPresent</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;GO:0033644&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;pos&#39;</span>
+        <span class="ow">and</span> <span class="n">datEntryGOTermPresent</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;GO:0016021&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;pos&#39;</span>
+        <span class="ow">and</span> <span class="n">datEntryGOTermPresent</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;GO:0046782&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;neg&#39;</span>
+        <span class="ow">and</span> <span class="n">datEntryGOTermPresent</span><span class="p">(</span><span class="n">entries</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;GO:0046782&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;neg&#39;</span>
+        <span class="ow">and</span> <span class="n">kws</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;activator&#39;</span><span class="p">,</span><span class="s1">&#39;reference proteome&#39;</span><span class="p">,</span><span class="s1">&#39;transcription&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;transcription regulation&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">kws</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;host membrane&#39;</span><span class="p">,</span><span class="s1">&#39;membrane&#39;</span><span class="p">,</span><span class="s1">&#39;reference proteome&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;transmembrane&#39;</span><span class="p">,</span><span class="s1">&#39;transmembrane helix&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">kws</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;early protein&#39;</span><span class="p">,</span> <span class="s1">&#39;signal&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="listIfStr" class="doc_header"><code>listIfStr</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L133" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>listIfStr</code>(<strong><code>lOrStr</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="filterDatEntry" class="doc_header"><code>filterDatEntry</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L136" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>filterDatEntry</code>(<strong><code>datEntry</code></strong>, <strong><code>restrictTo20AA</code></strong>=<em><code>True</code></em>, <strong><code>minLen</code></strong>=<em><code>50</code></em>, <strong><code>maxLen</code></strong>=<em><code>400</code></em>, <strong><code>maxPE</code></strong>=<em><code>None</code></em>, <strong><code>requireInSpecies</code></strong>=<em><code>''</code></em>, <strong><code>elimKWs</code></strong>=<em><code>[]</code></em>, <strong><code>requireKWs</code></strong>=<em><code>[]</code></em>, <strong><code>requireInName</code></strong>=<em><code>''</code></em>, <strong><code>excludeStrs</code></strong>=<em><code>[]</code></em>)</p>
+</blockquote>
+<p>Filters a .dat file entry for inclusion in a LM or classification data set.
+The filtering is based on the keyword arguments.</p>
+<p>Returns (primary_accession_num,sequence) if the entry passes the filter, else None.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">filterDatEntry</span><span class="p">))</span><span class="o">==</span><span class="mi">166</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">filterDatEntry</span><span class="p">,</span><span class="n">maxPE</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span><span class="o">==</span><span class="mi">50</span>
+        <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">filterDatEntry</span><span class="p">,</span><span class="n">maxPE</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                        <span class="n">requireKWs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;transmembrane&#39;</span><span class="p">]))</span><span class="o">==</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 
     </div>
