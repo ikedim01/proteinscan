@@ -20,7 +20,8 @@ index = {"openGzipOrText": "00_utils.ipynb",
          "listIfStr": "01_readuniprot.ipynb",
          "filterDatEntry": "01_readuniprot.ipynb",
          "aaLetters": "01_readuniprot.ipynb",
-         "aaLettersSet": "01_readuniprot.ipynb"}
+         "aaLettersSet": "01_readuniprot.ipynb",
+         "parseClustersFromUniref": "01_readuniprot.ipynb"}
 
 modules = ["utils.py",
            "readuniprot.py"]

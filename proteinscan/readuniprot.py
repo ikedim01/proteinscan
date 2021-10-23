@@ -3,7 +3,7 @@
 __all__ = ['iterDat', 'datEntryLnsWithCode', 'datEntryPrimaryAC', 'scanDat', 'allPrimaryACsInDat', 'datEntryPE',
            'datEntryName', 'datEntrySeq', 'datEntryGOLines', 'datEntryGOTermPresent', 'datEntryIsAtpBinding',
            'datEntryIsGtpBinding', 'datEntryIsMetalBinding', 'datEntryKWs', 'listIfStr', 'filterDatEntry', 'aaLetters',
-           'aaLettersSet']
+           'aaLettersSet', 'parseClustersFromUniref']
 
 # Cell
 
@@ -161,3 +161,44 @@ def filterDatEntry(datEntry, restrictTo20AA=True,
         or any (excludeStr in lName for excludeStr in excludeStrs)) :
         return None
     return (datEntryPrimaryAC(datEntry),seq)
+
+# Cell
+
+def parseClustersFromUniref(unirefFPath,clusterFPath,encoding='ISO-8859-1') :
+    """
+    Reads a UniRef XML file and generates a file just giving the cluster info.
+    Each line of the file is a space-separated list of primary accession numbers
+    from UniProt, which have been grouped into a cluster in the UniRef file.
+    Only keeps the entries in UniRef that have a UniProt accession number.
+    """
+    nEntries = nAccNos = 0
+    with utils.openGzipOrText(unirefFPath,encoding) as f :
+        with open(clusterFPath,'w') as outF :
+            for i,ln in enumerate(f) :
+                if (i%100000000)==0 :  # print every 100-millionth line
+                    print(i,ln.strip())
+                if '<entry' in ln :  # start a cluster
+                    memCount = 0
+                    expectedMemCount = None
+                    entryAccNos = []
+                    nEntries += 1
+                elif '</entry' in ln :  # end a cluster
+                    if memCount != expectedMemCount :
+                        print('member count mismatch',memCount,expectedMemCount)
+                    nAccNos += len(entryAccNos)
+                    if len(entryAccNos) >= 1 :
+                        outF.write(" ".join(entryAccNos)+'\n')
+                elif '<member' in ln or '<representativeMember' in ln :  # start a sequence member
+                    memAccNos = []
+                elif '</member' in ln or '</representativeMember' in ln :  # end a sequence member
+                    entryAccNos.extend(memAccNos)
+                    memCount += 1
+                elif '<property' in ln :  # parse a property line
+                    m = re.search(r'<property.*type="(.*?)".*value="(.*?)"',ln)
+                    if m is not None :
+                        t,v = m.groups()
+                        if t.lower()=='member count' :  # member count from entry element
+                            expectedMemCount = int(v.strip())
+                        elif t.lower()=='uniprotkb accession' : # accession number from member element
+                            memAccNos.append(v.strip())
+    print(nEntries,'entries',nAccNos,'accNos')

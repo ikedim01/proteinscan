@@ -6,8 +6,8 @@ title: readuniprot
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Parse .dat files (Uniprot/Swissprot flat file format)"
-description: "Parse .dat files (Uniprot/Swissprot flat file format)"
+summary: "Parse Uniprot/Swissprot text format files (.dat), and Uniref XML files."
+description: "Parse Uniprot/Swissprot text format files (.dat), and Uniref XML files."
 nb_path: "01_readuniprot.ipynb"
 ---
 <!--
@@ -36,6 +36,12 @@ nb_path: "01_readuniprot.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-to-parse-Uniprot/Swissprot-.dat-files-(text-format-protein-database):">Code to parse Uniprot/Swissprot .dat files (text format protein database):<a class="anchor-link" href="#Code-to-parse-Uniprot/Swissprot-.dat-files-(text-format-protein-database):"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -579,6 +585,150 @@ The filtering is based on the keyword arguments.</p>
         <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">filterDatEntry</span><span class="p">,</span><span class="n">maxPE</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span><span class="o">==</span><span class="mi">50</span>
         <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scanDat</span><span class="p">(</span><span class="s1">&#39;uniprotTest.dat.gz&#39;</span><span class="p">,</span><span class="n">filterDatEntry</span><span class="p">,</span><span class="n">maxPE</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                         <span class="n">requireKWs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;transmembrane&#39;</span><span class="p">]))</span><span class="o">==</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-to-parse-UniRef-files-(precalculated-clusters-of-similar-protein-sequences):">Code to parse UniRef files (precalculated clusters of similar protein sequences):<a class="anchor-link" href="#Code-to-parse-UniRef-files-(precalculated-clusters-of-similar-protein-sequences):"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="UniRef-XML-format">UniRef XML format<a class="anchor-link" href="#UniRef-XML-format"> </a></h3><p>UniRef files contain precomputed clusters of similar protein sequences,
+at different thresholds of sequence identity (100, 90, 50 - these are percentages).
+UniRef XML files are named, <code>unirefN.xml.gz</code> where N is the identity threshold (for example <code>uniref50.xml.gz</code>).
+These files define a set of clusters, each of which contains a set of member sequences.</p>
+<p>Each cluster has two special member sequences (these may be the same) - a <strong>seed</strong> sequence, which is simply the longest
+sequence in the cluster, and a <strong>representative</strong> sequence, which is chosen to be the most "informative" sequence
+in the cluster using a number of criteria including quality of information available, length, etc.
+Cluster identifiers are constructed from the prefix <code>UniRef</code>,
+followed by the sequence identity threshold (<code>100</code>, <code>90</code>, or <code>50</code>),
+followed by underscore and the UniProt accession number or UniParc id of the chosen <strong>representative</strong> sequence for the cluster
+(for example, <code>UniRef50_A0A5A9P0L4</code> or <code>UniRef50_UPI0016133188</code>).</p>
+<!-- A sequence in a cluster will always be at least N% identical to the seed sequence of that cluster,
+where N is the identity threshold (100, 90, or 50). In the case of UniRef90 and UniRef50,
+a sequence will also always be at least 11 AA long and have at least 80% overlap with the seed sequence;
+these requirements aren't applied to UniRef100.
+ -->
+
+<p>In more detail, the XML format consists of a series of <code>entry</code> elements. Each <code>entry</code> defines a cluster,
+and consists of one <code>representativeMember</code> element and a series of additional <code>member</code> elements,
+with each member identifying one sequence in the cluster.
+Each <code>entry</code> also has some attributes and elements describing the cluster as a whole,
+including an <code>id</code> attribute containing the cluster identifier constructed as described above,
+a <code>name</code> element with a descriptive name,
+and some <code>property</code> elements with different <code>type</code> attributes, including <code>type="member_count"</code>
+(number of sequences in the cluster), <code>type="common taxon"</code>, <code>type="common taxon ID"</code>,
+and <code>type="GO Molecular Function"</code> (I assume these last elements contain
+GO terms that are common to all members of the cluster).</p>
+<p>The <code>representativeMember</code> and <code>member</code> elements contain a <code>dbReference</code> element
+identifying the member sequence. This element includes:</p>
+<ul>
+<li>Attributes <code>type</code> specifying a database (for example <code>UniParc ID</code> or <code>UniProtKB ID</code>) and <code>id</code> within that database (for example <code>UPI000FFEDAD7</code> or <code>A0A410P257_9BACT</code>)</li>
+<li>If the sequence is in UniProt, one or more <code>property</code> elements with <code>type="UniProtKB accession"</code> giving UniProt accession numbers for the sequence (for example <code>A0A410P257</code>) - if more than one, these will all be alternates for the same sequence in UniProt.</li>
+<li>If the top level <code>id</code> attribute is from UniProt, a <code>property</code> element with <code>type="UniParc ID"</code> giving the UniParc id for the sequence.</li>
+<li>For UniRef90 and UniRef50, a <code>property</code> element with <code>type="UniRef100 ID"</code> and <code>value=</code> the UniRef100 cluster id for the sequence.</li>
+<li>For UniRef50, a <code>property</code> element with <code>type="UniRef90 ID"</code> and <code>value=</code> the UniRef90 cluster id for the sequence.</li>
+<li>Some <code>property</code> elements with information about the sequence, including <code>type="length"</code>, <code>type="protein name"</code>, <code>type="source organism"</code>, <code>type="NCBI taxonomy"</code></li>
+</ul>
+<p>The <code>representativeMember</code> elements also contain a <code>sequence</code> element giving the actual AA sequence.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parseClustersFromUniref" class="doc_header"><code>parseClustersFromUniref</code><a href="https://github.com/ikedim01/proteinscan/tree/master/proteinscan/readuniprot.py#L167" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parseClustersFromUniref</code>(<strong><code>unirefFPath</code></strong>, <strong><code>clusterFPath</code></strong>, <strong><code>encoding</code></strong>=<em><code>'ISO-8859-1'</code></em>)</p>
+</blockquote>
+<p>Reads a UniRef XML file and generates a file just giving the cluster info.
+Each line of the file is a space-separated list of primary accession numbers
+from UniProt, which have been grouped into a cluster in the UniRef file.
+Only keeps the entries in UniRef that have a UniProt accession number.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parseClustersFromUniref</span><span class="p">(</span><span class="s1">&#39;unirefTest.xml.gz&#39;</span><span class="p">,</span><span class="s1">&#39;unirefTestClusters.txt&#39;</span><span class="p">)</span>
+<span class="n">unirefL</span> <span class="o">=</span> <span class="p">[</span><span class="n">ln</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unirefTestClusters.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
+<span class="k">assert</span> <span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">accNoL</span><span class="p">)</span> <span class="k">for</span> <span class="n">accNoL</span> <span class="ow">in</span> <span class="n">unirefL</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1232</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">unirefL</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;A0A5A9P0L4&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">unirefL</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;Q8WZ42&#39;</span><span class="p">,</span> <span class="s1">&#39;A6NKB1&#39;</span><span class="p">,</span> <span class="s1">&#39;E7EQE6&#39;</span><span class="p">,</span> <span class="s1">&#39;E7ET18&#39;</span><span class="p">,</span> <span class="s1">&#39;K7ENY1&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">unirefL</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;A0A2D4NV39&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A2D4GXH3&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A6P7QTE9&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A6P7QKP2&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A6P7QQP5&#39;</span><span class="p">]</span>
+        <span class="ow">and</span> <span class="n">unirefL</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="p">[</span><span class="s1">&#39;K7G060&#39;</span><span class="p">,</span> <span class="s1">&#39;M7AMC7&#39;</span><span class="p">,</span> <span class="s1">&#39;G3URQ7&#39;</span><span class="p">,</span> <span class="s1">&#39;G1NB19&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A091K6H9&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7K4ZDL0&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;A0A7L0GLZ9&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7L0TQB1&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7L1IDD4&#39;</span><span class="p">,</span> <span class="s1">&#39;G3UQ76&#39;</span><span class="p">,</span> <span class="s1">&#39;G3UR09&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7K5D0T2&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;A0A7K9EPM6&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A091EPU3&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A091EPV7&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A091ESE9&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7K7BU71&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;A0A7L1PTK0&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7L1UQH9&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7K7BUC8&#39;</span><span class="p">,</span> <span class="s1">&#39;A0A7L4KN96&#39;</span><span class="p">]</span>
+       <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0 &lt;?xml version=&#34;1.0&#34; encoding=&#34;ISO-8859-1&#34; ?&gt;
+8 entries 1278 accNos
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">fastai</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 </pre></div>
 
     </div>
